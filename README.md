@@ -7,7 +7,11 @@
 Запуск обучения:
 
 ```bash
-python main.py
+python train_rotate/main.py
+```
+
+```bash
+python train_classification/main.py
 ```
 
 ## Конвертация модели в torchscript
@@ -17,7 +21,6 @@ python train/convert_to_torchscript.py
 ```
 
 ## Инференс
-Пример инференса лежит в ./inference/inference.py, inference_on_dir.py
-
+Пример инференса лежит в .train_classification/inference/inference.py, inference_on_dir.py
 
 Для запуска модели в продакшн в виде приложения обратитесь к инструкции [запуск модели в продакшн](flet_app/README.md)
