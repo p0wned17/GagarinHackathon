@@ -29,9 +29,12 @@ def handle_image(message):
     if response.status_code == 200:
         api_response = response.json()
 
+        if api_response['page_number'] is None:
+            api_response['page_number'] = 1
+        
         bot.reply_to(
             message,
-            f"<b>Тип документа:</b>{id_to_classes_map[api_response['type']]}\n<b>Номер страницы:</b>{api_response['page_number']}\n<b>Уверенность в тип документа:</b> {api_response['confidence']}\n<b>Серия: {api_response['series']}</b>\n<b>Номер: {api_response['number']}</b>",
+            f"<b>Тип документа:</b>{id_to_classes_map[api_response['type']]}\n<b>Номер страницы:</b>{api_response['page_number']}\n<b>Уверенность в типе документа:</b> {api_response['confidence']}\n<b>Серия: {api_response['series']}</b>\n<b>Номер: {api_response['number']}</b>",
             parse_mode="HTML",
         )
     else:

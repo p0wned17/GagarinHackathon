@@ -21,11 +21,13 @@ def main(page: ft.Page):
     page.update()
     img = ft.Image()
 
+    ru_type = {'personal_passport': 'Паспорт', 'vehicle_passport': 'ПТС', 'vehicle_certificate': 'СТС', 'driver_license': 'Водительское удостоверение'}
+
     def display_im(path):
         img = ft.Image(
             src=path,
-            width=400,
-            height=400,
+            width=600,
+            height=600,
             fit=ft.ImageFit.CONTAIN,
         )
         images = ft.Row(expand=1, wrap=False, scroll="always")
@@ -37,8 +39,9 @@ def main(page: ft.Page):
         print("res")
         print(res)
         res = ast.literal_eval(res)
-        print(res)
-        return {'Класс изображения': res['type'], 'Страница': res['page_number'], 'Confidence': res['confidence'], 'Серия документа': res['series'], 'Номер': res['number']}
+        if res['page_number']=='None':
+            res['page_number'] = '1'
+        return {'Класс изображения': ru_type[res['type']], 'Страница': res['page_number'], 'Уверенность в типе документа': res['confidence'], 'Серия документа': res['series'], 'Номер': res['number']}
 
     def display_results(res):
         for key, value in res.items():
@@ -48,10 +51,11 @@ def main(page: ft.Page):
 
 
     def pick_files_result(e: ft.FilePickerResultEvent):
+        page.scroll = True
         print(selected_file_text.value)
         print(len(page.controls))
-        if len(page.controls) > 1:
-            for i in range (len(page.controls) - 1):
+        if len(page.controls) > 2:
+            for i in range (len(page.controls) - 2):
                 page.controls.pop()
             page.update()
         selected_file_text.value = (
@@ -73,6 +77,7 @@ def main(page: ft.Page):
 
     page.overlay.append(pick_files_dialog)
 
+    page.controls.append(ft.Text())
     page.add(
         ft.Row(
             [
@@ -83,6 +88,8 @@ def main(page: ft.Page):
                         allow_multiple=False,
                         allowed_extensions=['png', 'jpg', 'jpeg'],
                     ),
+                    color=ft.colors.BLACK,
+                    bgcolor=ft.colors.BROWN_50,
                 ),
                 selected_file_text,
             ]

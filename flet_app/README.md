@@ -1,7 +1,9 @@
-# GagarinHack - Решение команды GigaFlex
+# A my_flet_app Flet app
 
-## Запуск приложения для распознавания документов
+An example of a minimal Flet app.
 
-Для того, чтобы скачать приложение нужно перейти в папку build/ и скачать файл apk
+To run the app:
 
-Далее установить на свое устройство через пакетный менеджер
+```
+flet run [app_directory]
+```
